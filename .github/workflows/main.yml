@@ -1,0 +1,57 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+             .
+             apigateway
+             dynamodb
+             lambda
+             roles
+      - name: Zip Folder
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        run: |
+          mkdir -p ${{ github.workspace }}/artifact
+          pwd
+          cd ..
+          ls -lrth
+          tar -cvf line.tar --exclude=".git" -C ec2-script .
+          time=$(date '+%Y-%m-%d_%H-%M-%S%z(%Z)')
+          gzip < line.tar > $time.line.tar.gz
+          aws s3 cp $time.routinglayer.tar.gz s3://test122353536/$time.line.tar.gz
+        shell: bash
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: routing-layer
+          path: |
+            .
+            apigateway
+            dynamodb
+            lambda
+            roles
+
