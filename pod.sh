@@ -54,11 +54,11 @@ check_and_install_command "eksctl" 'curl --silent --location "https://github.com
 check_and_install_command "kubectl" 'curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin'
 
 # Update AWS credentials
-echo "
-[default]
-aws_access_key_id = $ACCESS_KEY_ID
-aws_secret_access_key = $SECRET_ACCESS_KEY
-" > ~/.aws/credentials
+# echo "
+# [default]
+# aws_access_key_id = $ACCESS_KEY_ID
+# aws_secret_access_key = $SECRET_ACCESS_KEY
+# " > ~/.aws/credentials
 
 echo "Credentials updated successfully."
 
