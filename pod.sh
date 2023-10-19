@@ -17,8 +17,8 @@ VOLUME_TYPE="io2"
 IOPS="100"
 
 # Your AWS access key ID and secret access key will be provided as command-line arguments
-ACCESS_KEY_ID="$1"
-SECRET_ACCESS_KEY="$2"
+# ACCESS_KEY_ID="$1"
+# SECRET_ACCESS_KEY="$2"
 
 # Function to display an error message and exit the script with a non-zero status
 function display_error_and_exit() {
@@ -27,9 +27,9 @@ function display_error_and_exit() {
 }
 
 # Validate the number of arguments
-if [ $# -ne 2 ]; then
-    display_error_and_exit "Usage: $0 <aws_access_key_id> <aws_secret_access_key>"
-fi
+# if [ $# -ne 2 ]; then
+#     display_error_and_exit "Usage: $0 <aws_access_key_id> <aws_secret_access_key>"
+# fi
 
 # Function to check if a command is installed, and install it if not
 function check_and_install_command() {
@@ -132,7 +132,7 @@ function create_iam_service_account_and_addons() {
         --role-name AmazonEKSVPCCNIRole \
         --attach-policy-arn arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy \
         --override-existing-serviceaccounts \
-        --approve    
+        --approve
     # else
     #     echo "IAM service account 'vpc-cni-sa' already exists. Skipping IAM service account creation."
     # fi
