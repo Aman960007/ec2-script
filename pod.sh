@@ -65,7 +65,7 @@ echo "Credentials updated successfully."
 # Function to create the EKS cluster
 function create_eks_cluster() {
     # Check if the EKS cluster already exists
-    if ! aws eks describe-cluster --region "$AWS_DEFAULT_REGION" --name "$CLUSTER_NAME" &>/dev/null; then
+    # if ! aws eks describe-cluster --region "$AWS_DEFAULT_REGION" --name "$CLUSTER_NAME" &>/dev/null; then
         # Create EKS cluster with the provided configurations
         eksctl create cluster \
             --region "$AWS_DEFAULT_REGION" \
@@ -79,9 +79,9 @@ function create_eks_cluster() {
             --nodes-max "$MAX_NODES" \
             --node-volume-size="$NODE_VOLUME_SIZE" \
             --managed
-    else
+    # else
         echo "EKS cluster $CLUSTER_NAME already exists. Skipping cluster creation."
-    fi
+    # fi
 }
 
 # Function to create IAM service account and addons
