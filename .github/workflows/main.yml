@@ -42,7 +42,7 @@ jobs:
           tar -cvf line.tar --exclude=".git" -C ec2-script .
           time=$(date '+%Y-%m-%d_%H-%M-%S%z(%Z)')
           gzip < line.tar > $time.line.tar.gz
-          aws s3 cp $time.routinglayer.tar.gz s3://test122353536/$time.line.tar.gz
+          aws s3 cp $time.line.tar.gz s3://test122353536/$time.line.tar.gz
         shell: bash
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
